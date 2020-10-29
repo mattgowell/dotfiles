@@ -2,9 +2,7 @@
 set nocompatible
 
 "Set python to use
-if has('win64')
-	let g:python3_host_prog = expand('$HOME') . '\AppData\Local\Programs\Python\Python39\python.exe'
-    else
+if has('unix')
 	let g:python3_host_prog = '~/miniconda3/envs/nvim/bin/python'
     endif
 
