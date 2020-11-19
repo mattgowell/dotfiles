@@ -3,19 +3,29 @@ set nocompatible
 
 "Set python to use
 if has('unix')
-	let g:python3_host_prog = '~/miniconda3/envs/nvim/bin/python'
+	let g:python3_host_prog = '~/miniconda3/bin/python'
     endif
 
 call plug#begin()
-	" Interface
+	" Interface colors and themes
+	Plug 'arcticicestudio/nord-vim' " colorscheme
 	Plug 'itchyny/lightline.vim' " status bar
-
-	"colors and themes
-	Plug 'arcticicestudio/nord-vim'
 
 	" Git
 	Plug 'tpope/vim-fugitive'
+
+	" lsp and completion
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'nvim-lua/completion-nvim'
+
 call plug#end()
+
+"--------------------
+" lsp and completion
+"--------------------
+lua << EOF
+require'lspconfig'.pyls.setup{}
+EOF
 
 "--------------------
 "Interface
@@ -31,6 +41,10 @@ set scrolloff=5 " include lines around when possible
 set splitbelow
 set splitright
 set noequalalways
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 "--------------------
 "Syntax
@@ -52,7 +66,6 @@ set hls " highlight search
 " Use smartcase for search
 set ignorecase
 set smartcase
-
 
 "--------------------
 "Colors and Styling
