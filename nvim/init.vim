@@ -20,7 +20,6 @@ call plug#begin()
 	" lsp and completion
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'nvim-lua/completion-nvim'
-	Plug 'kristijanhusak/vim-dadbod-completion'
 
 call plug#end()
 
@@ -28,25 +27,15 @@ call plug#end()
 " lsp and completion
 "--------------------
 
-" vim-dadbod-completion
-augroup completion
-  autocmd!
-  autocmd BufEnter * lua require'completion'.on_attach()
-  autocmd FileType pgsql let g:completion_trigger_character = ['.', '"']
-augroup END
+" sqlls
+lua <<EOF
+require'lspconfig'.sqlls.setup{
+    cmd = {"sql-language-server", "up", "--method", "stdio"}
+}
+EOF
 
-" Source is automatically added, you just need to include it in the chain complete list
-let g:completion_chain_complete_list = {
-    \   'pgsql': [
-    \    {'complete_items': ['vim-dadbod-completion']},
-    \   ],
-    \ }
-
-" Make sure `substring` is part of this list. Other items are optional for this completion source
-let g:completion_matching_strategy_list = ['exact', 'substring']
-
-" Useful if there's a lot of camel case items
-let g:completion_matching_ignore_case = 1
+" completion in every buffer
+autocm BufEnter * lua require'completion'.on_attach()
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
