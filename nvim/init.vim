@@ -20,6 +20,7 @@ call plug#begin()
 	" lsp and completion
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'nvim-lua/completion-nvim'
+	Plug 'steelsojka/completion-buffers'
 
 call plug#end()
 
@@ -46,6 +47,13 @@ set shortmess+=c
 "map <c-p> to manually trigger completion
 imap <silent> <c-p> <Plug>(completion_trigger)
 
+let g:completion_chain_complete_list = {
+    \'default' : [
+    \   {'complete_items' : ['lsp', 'buffers']},
+    \   {'mode' : '<c-p>'},
+    \   {'mode' : '<c-n>'}
+    \]
+    \}
 
 "--------------------
 "Interface
