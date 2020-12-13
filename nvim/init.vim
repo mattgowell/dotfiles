@@ -21,19 +21,12 @@ call plug#begin()
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'nvim-lua/completion-nvim'
 	Plug 'steelsojka/completion-buffers'
-
+	Plug 'kristijanhusak/vim-dadbod-completion'
 call plug#end()
 
 "--------------------
 " lsp and completion
 "--------------------
-
-" sqlls
-lua <<EOF
-require'lspconfig'.sqlls.setup{
-    cmd = {"sql-language-server", "up", "--method", "stdio"}
-}
-EOF
 
 " completion in every buffer
 autocm BufEnter * lua require'completion'.on_attach()
@@ -47,12 +40,17 @@ set shortmess+=c
 "map <c-p> to manually trigger completion
 imap <silent> <c-p> <Plug>(completion_trigger)
 
+let g:completion_matching_strategy_list = ['exact', 'substring']
+
 let g:completion_chain_complete_list = {
     \'default' : [
     \   {'complete_items' : ['lsp', 'buffers']},
     \   {'mode' : '<c-p>'},
     \   {'mode' : '<c-n>'}
-    \]
+    \],
+    \'sql': [
+    \	{'complete_items' : ['vim-dadbod-completion', 'lsp', 'buffers']},
+    \],
     \}
 
 "--------------------
