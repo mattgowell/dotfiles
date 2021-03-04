@@ -25,8 +25,17 @@ call plug#begin()
 call plug#end()
 
 "--------------------
+" source other files
+"--------------------
+source ~/.config/nvim/mydadbods.vim
+
+"--------------------
 " lsp and completion
 "--------------------
+" require language server
+lua << EOF
+require'lspconfig'.pyls.setup{}
+EOF
 
 " completion in every buffer
 autocm BufEnter * lua require'completion'.on_attach()
@@ -50,7 +59,7 @@ let g:completion_chain_complete_list = {
     \],
     \'sql': [
     \	{'complete_items' : ['vim-dadbod-completion', 'lsp', 'buffers']},
-    \],
+    \]
     \}
 
 "--------------------
