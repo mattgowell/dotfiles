@@ -17,6 +17,9 @@ call plug#begin()
 	" SQL
 	Plug 'tpope/vim-dadbod'
 
+	" Surround
+	Plug 'tpope/vim-surround'
+
 	" lsp and completion
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'nvim-lua/completion-nvim'
